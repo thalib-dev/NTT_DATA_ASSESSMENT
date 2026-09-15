@@ -1,0 +1,16 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="180" height="180" rx="40" fill="#09090B" />
+  <rect x="2" y="2" width="176" height="176" rx="38" stroke="#27272A" stroke-width="4" fill="none" />
+  {/* CPU / Machine Core */}
+  <rect x="50" y="50" width="80" height="80" rx="18" stroke="#FAFAFA" stroke-width="8" fill="none" />
+  <rect x="70" y="70" width="40" height="40" rx="8" fill="#FAFAFA" />
+  {/* Connector Pins */}
+  <line x1="70" y1="32" x2="70" y2="46" stroke="#FAFAFA" stroke-width="6" stroke-linecap="round" />
+  <line x1="110" y1="32" x2="110" y2="46" stroke="#FAFAFA" stroke-width="6" stroke-linecap="round" />
+  <line x1="70" y1="134" x2="70" y2="148" stroke="#FAFAFA" stroke-width="6" stroke-linecap="round" />
+  <line x1="110" y1="134" x2="110" y2="148" stroke="#FAFAFA" stroke-width="6" stroke-linecap="round" />
+  <line x1="32" y1="70" x2="46" y2="70" stroke="#FAFAFA" stroke-width="6" stroke-linecap="round" />
+  <line x1="32" y1="110" x2="46" y2="110" stroke="#FAFAFA" stroke-width="6" stroke-linecap="round" />
+  <line x1="134" y1="70" x2="148" y2="70" stroke="#FAFAFA" stroke-width="6" stroke-linecap="round" />
+  <line x1="134" y1="110" x2="148" y2="110" stroke="#FAFAFA" stroke-width="6" stroke-linecap="round" />
+</svg>
