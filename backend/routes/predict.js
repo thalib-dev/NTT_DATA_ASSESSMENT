@@ -2,7 +2,16 @@ const express = require('express');
 const router = express.Router();
 const db = require('../db/database');
 
-const ML_SERVICE_URL = (process.env.ML_SERVICE_URL || 'http://localhost:5000').replace(/\/+$/, '');
+function getMlUrl() {
+  if (process.env.ML_SERVICE_URL) {
+    return process.env.ML_SERVICE_URL.replace(/\/+$/, '');
+  }
+  if (process.env.RAILWAY_PUBLIC_DOMAIN) {
+    const domain = process.env.RAILWAY_PUBLIC_DOMAIN.replace(/backend/i, 'ml-service');
+    return `https://${domain}`;
+  }
+  return 'http://localhost:5000';
+}
 
 // POST predict risk for a machine
 router.post('/:id', async (req, res) => {
@@ -18,7 +27,8 @@ router.post('/:id', async (req, res) => {
     const machineData = JSON.parse(machine.data);
 
     // Send to Python ML service
-    const response = await fetch(`${ML_SERVICE_URL}/predict`, {
+    const mlUrl = getMlUrl();
+    const response = await fetch(`${mlUrl}/predict`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(machineData)

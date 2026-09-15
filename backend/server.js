@@ -27,11 +27,22 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+function getMlUrl() {
+  if (process.env.ML_SERVICE_URL) {
+    return process.env.ML_SERVICE_URL.replace(/\/+$/, '');
+  }
+  if (process.env.RAILWAY_PUBLIC_DOMAIN) {
+    const domain = process.env.RAILWAY_PUBLIC_DOMAIN.replace(/backend/i, 'ml-service');
+    return `https://${domain}`;
+  }
+  return 'http://localhost:5000';
+}
+
 // ML service health proxy (avoids CORS issues for frontend)
-const ML_SERVICE_URL = (process.env.ML_SERVICE_URL || 'http://localhost:5000').replace(/\/+$/, '');
 app.get('/api/ml-health', async (req, res) => {
   try {
-    const response = await fetch(`${ML_SERVICE_URL}/health`, { signal: AbortSignal.timeout(3000) });
+    const mlUrl = getMlUrl();
+    const response = await fetch(`${mlUrl}/health`, { signal: AbortSignal.timeout(3000) });
     const data = await response.json();
     res.json(data);
   } catch {

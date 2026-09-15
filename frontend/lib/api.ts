@@ -1,4 +1,21 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000/api"
+function getApiBase(): string {
+  const envUrl = process.env.NEXT_PUBLIC_API_URL
+  if (typeof window !== "undefined") {
+    const hostname = window.location.hostname
+    if (hostname !== "localhost" && hostname !== "127.0.0.1") {
+      if (envUrl && !envUrl.includes("localhost")) {
+        return envUrl.replace(/\/+$/, '')
+      }
+      const protocol = window.location.protocol
+      if (hostname.includes("railway.app")) {
+        const backendHost = hostname.replace("frontend", "backend")
+        return `${protocol}//${backendHost}/api`
+      }
+      return `${protocol}//${window.location.host}/api`
+    }
+  }
+  return envUrl || "http://localhost:4000/api"
+}
 
 export interface FieldConfig {
   id: number
@@ -32,7 +49,8 @@ export interface PredictionResult {
 }
 
 async function request<T>(endpoint: string, options?: RequestInit): Promise<T> {
-  const res = await fetch(`${API_BASE}${endpoint}`, {
+  const apiBase = getApiBase()
+  const res = await fetch(`${apiBase}${endpoint}`, {
     headers: {
       "Content-Type": "application/json",
       ...options?.headers,
