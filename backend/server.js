@@ -1,15 +1,24 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// Middleware
+// CORS Preflight & Header Middleware (Ensures Railway cross-origin requests never fail)
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  next();
+});
+
 app.use(cors());
 app.use(express.json());
-
-const fs = require('fs');
 
 // Serve static frontend files if available
 const frontendPublicPath = path.join(__dirname, '..', 'frontend', 'public');
