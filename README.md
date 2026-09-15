@@ -107,6 +107,13 @@ npm install
 npm run dev              # Starts Express backend on http://localhost:4000
 ```
 
+#### 3. Start Next.js Frontend UI (Port 3000)
+```bash
+cd frontend
+npm install
+npm run dev              # Starts Next.js UI on http://localhost:3000
+```
+
 ---
 
 ## 🧩 Dynamic Field Implementation & Database Design
